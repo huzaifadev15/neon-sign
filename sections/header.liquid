@@ -1,0 +1,405 @@
+<section class="site-header fixed top-0 left-0 right-0 w-full z-[200] transition-transform duration-300 ease-out translate-y-0" id="SiteHeader">
+  <section class="text-black relative pb-6 border-b border-gray-100 transition-all duration-300" style="background: #ffffff;">
+    <section class="w-full px-4 navbar-container lg:container lg:mx-auto">
+      <section class="flex items-center justify-between h-16">
+
+        {%- comment -%} ===== MOBILE HAMBURGER ===== {%- endcomment -%}
+        <section class="mobile-only lg:hidden flex items-center z-20 relative">
+          <div class="mobile-sidebar-wrapper">
+            <button
+              aria-label="{{ 'general.accessibility.open_menu' | t }}"
+              class="mobile-menu-toggle text-black p-2 z-50 relative rounded-lg transition-all duration-200"
+              aria-expanded="false"
+              aria-controls="MobileSidebar"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="menu-icon" style="transition:transform 0.3s ease">
+                <path d="M4 12h16"></path>
+                <path d="M4 18h16"></path>
+                <path d="M4 6h16"></path>
+              </svg>
+            </button>
+
+            {%- comment -%} ===== MOBILE SIDEBAR ===== {%- endcomment -%}
+            <div
+              id="MobileSidebar"
+              class="mobile-sidebar fixed top-0 left-0 h-screen w-[340px] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 z-[1001] shadow-2xl transform transition-all duration-300 ease-out -translate-x-full"
+              aria-hidden="true"
+            >
+              {%- comment -%} Sidebar header {%- endcomment -%}
+              <div class="relative p-6 border-b border-slate-700/50 bg-gradient-to-r from-[#ff00f5]/20 via-purple-500/10 to-transparent">
+                <div class="flex items-center justify-between">
+                  <a href="{{ routes.root_url }}" tabindex="-1">
+                    {%- if settings.logo != blank -%}
+                      <img
+                        src="{{ settings.logo | image_url: width: 400 }}"
+                        alt="{{ shop.name }}"
+                        width="200"
+                        height="45"
+                        class="h-9 w-auto object-contain"
+                        loading="eager"
+                      >
+                    {%- else -%}
+                      <span class="text-white font-bold text-xl">{{ shop.name }}</span>
+                    {%- endif -%}
+                  </a>
+                  <button
+                    aria-label="{{ 'general.accessibility.close_menu' | t }}"
+                    class="mobile-sidebar-close text-white/80 hover:text-white p-2 hover:bg-white/10 rounded-full transition-all duration-200 hover:rotate-90"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M18 6 6 18"></path>
+                      <path d="m6 6 12 12"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#ff00f5]/60 to-transparent"></div>
+              </div>
+
+              {%- comment -%} Sidebar nav links {%- endcomment -%}
+              <div class="overflow-y-auto h-[calc(100vh-100px)] scrollbar-hide">
+                <div class="p-4">
+                  <div class="space-y-2">
+                    {%- assign mobile_links = section.settings.mobile_menu.links -%}
+                    {%- if mobile_links != blank -%}
+                      {%- for link in mobile_links -%}
+                        <a
+                          href="{{ link.url }}"
+                          class="flex items-center w-full p-4 text-white/90 hover:text-white hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-xl transition-all duration-300 group border border-transparent hover:border-white/10"
+                        >
+                          <span class="font-semibold">{{ link.title }}</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-auto text-white/40 group-hover:text-white/80 group-hover:translate-x-1 transition-all duration-200" aria-hidden="true">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                          </svg>
+                        </a>
+                      {%- endfor -%}
+                    {%- else -%}
+                      {%- assign default_mobile_links = 'Home,/|Shop,/collections/all|Gallery,/pages/gallery|FAQ,/pages/faq|Contact,/pages/contact-us' | split: '|' -%}
+                      {%- for item in default_mobile_links -%}
+                        {%- assign parts = item | split: ',' -%}
+                        <a
+                          href="{{ parts[1] }}"
+                          class="flex items-center w-full p-4 text-white/90 hover:text-white hover:bg-gradient-to-r hover:from-white/10 hover:to-white/5 rounded-xl transition-all duration-300 group border border-transparent hover:border-white/10"
+                        >
+                          <span class="font-semibold">{{ parts[0] }}</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-auto text-white/40 group-hover:text-white/80 group-hover:translate-x-1 transition-all duration-200" aria-hidden="true">
+                            <path d="M5 12h14"></path>
+                            <path d="m12 5 7 7-7 7"></path>
+                          </svg>
+                        </a>
+                      {%- endfor -%}
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                {%- comment -%} Sign types accordion {%- endcomment -%}
+                <div class="p-4 border-t border-slate-700/50">
+                  <button class="mobile-sign-types-toggle flex items-center justify-between w-full p-3 text-white hover:bg-white/10 rounded-xl transition-all duration-200" aria-expanded="false" aria-controls="MobileSignTypes">
+                    <div class="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ff66f8] mr-2" aria-hidden="true">
+                        <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path>
+                        <path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle>
+                      </svg>
+                      <span class="text-sm font-bold uppercase tracking-wider">Sign Types</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#ff66f8] transition-transform sign-types-chevron" aria-hidden="true">
+                      <path d="m6 9 6 6 6-6"></path>
+                    </svg>
+                  </button>
+                  <div id="MobileSignTypes" class="mobile-sign-types-dropdown hidden mt-2 space-y-1 pl-2">
+                    {%- for block in section.blocks -%}
+                      {%- if block.type == 'sign_type' -%}
+                        <a href="{{ block.settings.url }}" class="flex items-center p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm">
+                          {{ block.settings.label }}
+                        </a>
+                      {%- endif -%}
+                    {%- endfor -%}
+                    {%- if section.blocks.size == 0 -%}
+                      {%- assign sign_links = 'Backlit Signs,/products/backlit-signs|Custom 3D Signs,/products/custom-3d-signs|Custom Aluminum Signs,/products/custom-aluminum-signs|Custom Storefront Signs,/products/custom-storefront-signs|Custom Street Signs,/products/custom-made-street-signs|Custom Door Signs,/products/custom-door-signs|Custom Wood Sign,/products/custom-wood-sign|Custom Metal Signs,/products/custom-metal-signs|Custom Acrylic Signs,/products/custom-acrylic-signs|Custom Business Signs,/products/custom-business-signs|Custom Lawn Signs,/products/custom-lawn-signs|Custom Neon Sign,/products/custom-neon-sign|Custom LED Signs,/products/custom-led-signs|Custom Signs,/products/custom-signs' | split: '|' -%}
+                      {%- for item in sign_links -%}
+                        {%- assign parts = item | split: ',' -%}
+                        <a href="{{ parts[1] }}" class="flex items-center p-3 text-white/80 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm">
+                          {{ parts[0] }}
+                        </a>
+                      {%- endfor -%}
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                {%- comment -%} CTA buttons {%- endcomment -%}
+                <div class="p-4 border-t border-slate-700/50">
+                  <div class="space-y-3">
+                    <a href="/pages/contact-us" class="flex items-center justify-center space-x-2 w-full p-4 bg-gradient-to-r from-[#ff00f5] via-[#ff5efc] to-[#ff66f8] text-white rounded-2xl font-bold hover:from-[#ff5efc] hover:via-[#b000a3] hover:to-[#ff00f5] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path>
+                      </svg>
+                      <span>Get Free Quote</span>
+                    </a>
+                    <a href="/pages/reviews" class="flex items-center justify-center space-x-2 w-full p-3 bg-gradient-to-r from-slate-800/80 to-slate-700/80 text-white rounded-xl font-semibold hover:from-slate-700/80 hover:to-slate-600/80 transition-all duration-200 border border-slate-600/50">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-400" aria-hidden="true">
+                        <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path>
+                      </svg>
+                      <span>Reviews</span>
+                    </a>
+                  </div>
+                </div>
+
+                {%- comment -%} Phone {%- endcomment -%}
+                <div class="p-4 border-t border-slate-700/50 bg-gradient-to-r from-slate-800/40 to-transparent">
+                  <div class="text-center bg-slate-800/50 rounded-2xl p-4 border border-slate-700/50">
+                    <p class="text-slate-300 text-sm mb-2 font-medium">Need Help?</p>
+                    <a href="tel:{{ settings.phone_href }}" class="text-[#ff66f8] font-bold text-xl hover:text-[#ff99fb] transition-colors block">{{ settings.phone_number }}</a>
+                    <p class="text-slate-400 text-xs mt-2">{{ settings.business_hours }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {%- comment -%} Sidebar overlay {%- endcomment -%}
+            <div id="MobileSidebarOverlay" class="mobile-overlay fixed inset-0 bg-black/50 z-[1000] hidden opacity-0 transition-opacity duration-300"></div>
+          </div>
+        </section>
+
+        {%- comment -%} ===== LOGO ===== {%- endcomment -%}
+        <section class="flex-1 flex justify-center lg:justify-start mr-8 lg:flex-none lg:w-1/4">
+          <a class="navbar-logo-container mt-1 lg:mt-1" href="{{ routes.root_url }}">
+            {%- if settings.logo != blank -%}
+              <img
+                src="{{ settings.logo | image_url: width: 500 }}"
+                alt="{{ shop.name }}"
+                width="{{ settings.logo_width }}"
+                height="50"
+                class="navbar-logo"
+                loading="eager"
+              >
+            {%- else -%}
+              <span class="site-name font-bold text-xl text-black">{{ shop.name }}</span>
+            {%- endif -%}
+          </a>
+        </section>
+
+        {%- comment -%} ===== MOBILE CART ===== {%- endcomment -%}
+        <section class="mobile-only lg:hidden flex items-center z-20 relative pr-1">
+          <a class="flex items-center justify-center text-black transition-colors hover:text-[#9700cd] relative" href="{{ routes.cart_url }}" aria-label="{{ 'general.cart.title' | t }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+              <circle cx="8" cy="21" r="1"></circle>
+              <circle cx="19" cy="21" r="1"></circle>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+            </svg>
+            {%- if cart.item_count > 0 -%}
+              <span class="cart-count absolute -top-1.5 -right-1.5 bg-[#ff00f5] text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">{{ cart.item_count }}</span>
+            {%- endif -%}
+          </a>
+        </section>
+
+        {%- comment -%} ===== DESKTOP NAV ===== {%- endcomment -%}
+        <section class="desktop-nav-section hidden lg:flex items-center w-full z-10">
+          <nav class="flex-1 flex items-center justify-center -ml-24" aria-label="Main navigation">
+
+            {%- comment -%} SIGN TYPES mega menu {%- endcomment -%}
+            <section class="relative group">
+              <button class="text-black hover:text-[#9700cd] px-3 py-2 flex items-center font-medium transition-colors duration-200" aria-expanded="false" aria-haspopup="true">
+                SIGN TYPES
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4 transition-transform group-hover:rotate-180" aria-hidden="true">
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+
+              <section class="mega-menu-dropdown absolute top-full left-1/2 -translate-x-[40%] pt-6 w-screen max-w-7xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                <section class="container mx-auto px-2 sm:px-4">
+                  <section class="bg-white shadow-xl rounded-lg overflow-hidden mega-menu border-t-2 border-[#e315c1]">
+                    <section class="flex flex-col">
+                      <section class="w-full p-2 sm:p-3">
+                        <section class="text-sm sm:text-base font-bold mb-1 text-gray-800 border-b-2 border-[#e315c1]/30 pb-0.5 uppercase tracking-wider">
+                          <span class="bg-gradient-to-r from-[#9700cd] to-[#e315c1] bg-clip-text text-transparent">CUSTOM NEON &amp; SIGNAGE</span>
+                        </section>
+                        <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1 sm:gap-2">
+
+                          {%- assign mega_items = 'Backlit Signs,/products/backlit-signs,lightbulb|Custom 3D Signs,/products/custom-3d-signs,box|Custom Aluminum Signs,/products/custom-aluminum-signs,layout-panel-top|Custom Storefront Signs,/products/custom-storefront-signs,store|Custom Made Street Signs,/products/custom-made-street-signs,signpost-big|Custom Door Signs,/products/custom-door-signs,door-open|Custom Wood Sign,/products/custom-wood-sign,tree-pine|Custom Metal Signs,/products/custom-metal-signs,wrench|Custom Acrylic Signs,/products/custom-acrylic-signs,layers|Custom Business Signs,/products/custom-business-signs,briefcase|Custom Lawn Signs,/products/custom-lawn-signs,leaf|Custom Neon Sign,/products/custom-neon-sign,zap|Custom LED Signs,/products/custom-led-signs,monitor-play|Custom Signs,/products/custom-signs,signpost-big' | split: '|' -%}
+
+                          {%- for item in mega_items -%}
+                            {%- assign parts = item | split: ',' -%}
+                            <a class="block group" href="{{ parts[1] }}">
+                              <section class="flex items-center p-1 sm:p-1.5 rounded hover:bg-[#fff5fc] transition-colors">
+                                <section class="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3">
+                                  {%- render 'icon', name: parts[2] -%}
+                                </section>
+                                <p class="text-xs sm:text-sm font-medium text-gray-700 group-hover:text-[#e315c1] transition-colors leading-tight">{{ parts[0] }}</p>
+                              </section>
+                            </a>
+                          {%- endfor -%}
+
+                        </section>
+                      </section>
+
+                      <section class="bg-gray-50 px-3 sm:px-6 py-1.5 flex flex-col sm:flex-row justify-between items-center border-t border-gray-200 gap-1.5 sm:gap-0">
+                        <section class="flex space-x-4 sm:space-x-6 text-xs sm:text-sm">
+                          <a class="text-gray-600 hover:text-[#e315c1] transition-colors" href="/pages/gallery">Gallery</a>
+                          <a class="text-gray-600 hover:text-[#e315c1] transition-colors" href="/pages/faq">FAQ</a>
+                        </section>
+                        <a href="/pages/contact-us" class="bg-[#9700cd] hover:bg-[#e315c1] text-white text-xs sm:text-sm font-medium py-1.5 px-3 sm:py-1 sm:px-4 rounded-full transition-colors w-full sm:w-auto text-center">Get a Quote</a>
+                      </section>
+                    </section>
+                  </section>
+                </section>
+              </section>
+            </section>
+
+            {%- comment -%} Secondary nav links {%- endcomment -%}
+            <section>
+              <a class="text-black hover:text-[#9700cd] px-3 py-2 flex items-center transition-colors duration-200" href="/pages/options">OPTIONS</a>
+            </section>
+            <section>
+              <a class="text-black hover:text-[#9700cd] px-3 py-2 flex items-center transition-colors duration-200" href="/pages/gallery">GALLERY</a>
+            </section>
+            <section>
+              <a class="text-black hover:text-[#9700cd] px-3 py-2 flex items-center transition-colors duration-200" href="/pages/contact-us">CONTACT</a>
+            </section>
+          </nav>
+
+          {%- comment -%} Right-side icons + CTA {%- endcomment -%}
+          <section class="flex items-center">
+            {%- comment -%} FREE INSTANT QUOTE CTA {%- endcomment -%}
+            <section class="hidden md:flex justify-center ml-8 mr-5">
+              <section class="relative inline-flex items-center justify-center group instant-quote-btn">
+                <section class="absolute inset-0 duration-1000 opacity-30 transition-all bg-gradient-to-r from-[#e315c1] via-[#9700cd] to-[#1a0035] rounded-full blur-lg filter group-hover:opacity-70 group-hover:duration-200"></section>
+                <a href="/pages/contact-us" class="group relative inline-flex items-center justify-center text-xs font-bold text-black transition-all duration-200 rounded-full overflow-hidden p-0.5 scale-90" style="background:linear-gradient(to right, #9700cd, #e315c1);box-shadow:0 6px 16px rgba(0,0,0,0.25), 0 3px 6px rgba(151,0,205,0.35), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -1px 0 rgba(0,0,0,0.1)">
+                  <section class="flex items-center h-full">
+                    <span class="drop-shadow-sm px-2 py-1.5 font-bold text-white">FREE</span>
+                    <section class="rounded-full px-2 py-1.5 flex items-center" style="background:linear-gradient(to right, #3b0066, #1a0035)">
+                      <span class="text-white mr-1 drop-shadow-sm">INSTANT QUOTE</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-2.5 h-2.5 drop-shadow-sm transition-transform group-hover:translate-x-1" aria-hidden="true">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                      </svg>
+                    </section>
+                  </section>
+                </a>
+              </section>
+            </section>
+
+            {%- comment -%} Search {%- endcomment -%}
+            <section class="relative">
+              <button class="search-toggle text-black hover:text-[#9700cd] mr-4 relative rounded-full p-1 transition-colors duration-200" aria-label="{{ 'general.search.search' | t }}" aria-expanded="false" aria-controls="SearchDrawer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+                  <path d="m21 21-4.34-4.34"></path>
+                  <circle cx="11" cy="11" r="8"></circle>
+                </svg>
+              </button>
+            </section>
+
+            {%- comment -%} Account {%- endcomment -%}
+            <a class="text-black hover:text-[#9700cd] mr-4 transition-colors duration-200" href="{{ routes.account_url }}" aria-label="Account">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </a>
+
+            {%- comment -%} Cart {%- endcomment -%}
+            <a class="flex items-center justify-center text-black transition-colors hover:text-[#9700cd] relative" href="{{ routes.cart_url }}" aria-label="{{ 'general.cart.title' | t }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5" aria-hidden="true">
+                <circle cx="8" cy="21" r="1"></circle>
+                <circle cx="19" cy="21" r="1"></circle>
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+              </svg>
+              {%- if cart.item_count > 0 -%}
+                <span class="cart-count absolute -top-1.5 -right-1.5 bg-[#ff00f5] text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">{{ cart.item_count }}</span>
+              {%- endif -%}
+            </a>
+          </section>
+        </section>
+
+      </section>
+    </section>
+  </section>
+
+  {%- comment -%} ===== CAPSULE TAB BAR ===== {%- endcomment -%}
+  <div class="absolute bottom-0 left-0 right-0 z-[60] transform translate-y-1/2">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-center relative w-full max-w-full px-2 sm:px-4">
+        <div class="capsule-tab-inner inline-flex rounded-full overflow-hidden shadow-lg relative w-full max-w-full lg:w-[340px] lg:max-w-[340px]" style="background:#6d0ebb82;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.25)">
+          <div class="capsule-tabs-scroll flex items-center overflow-x-auto pr-12 md:pr-14" style="scrollbar-width:none;-ms-overflow-style:none">
+            <div class="flex items-center pr-10" id="CapsuleTabs">
+              {%- assign tab_items = 'Storefront,/products/custom-storefront-signs|Acrylic,/products/custom-acrylic-signs|Metal,/products/custom-metal-signs|Led,/products/custom-led-signs|Neon,/products/custom-neon-sign|Wood,/products/custom-wood-sign|Door,/products/custom-door-signs|Street,/products/custom-made-street-signs|Aluminum,/products/custom-aluminum-signs' | split: '|' -%}
+              {%- for item in tab_items -%}
+                {%- assign tab_parts = item | split: ',' -%}
+                <a href="{{ tab_parts[1] }}" class="capsule-tab px-6 py-1 font-bold text-sm transition-all duration-200 whitespace-nowrap text-white rounded-full mx-1 my-1 hover:bg-white/20">{{ tab_parts[0] }}</a>
+              {%- endfor -%}
+            </div>
+          </div>
+          <button aria-label="{{ 'general.accessibility.scroll_right' | t }}" class="capsule-scroll-btn absolute right-0 top-0 bottom-0 flex items-center justify-center group z-10 rounded-r-full px-2.5">
+            <div class="flex items-center justify-center rounded-full w-6 h-6 transition-all duration-200 group-hover:scale-110" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 text-white" aria-hidden="true">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ===== SEARCH DRAWER ===== {%- endcomment -%}
+  <div id="SearchDrawer" class="search-drawer fixed top-0 left-0 right-0 bg-white shadow-lg z-[300] transform -translate-y-full transition-transform duration-300 ease-out" aria-hidden="true">
+    <div class="container mx-auto px-4 py-4">
+      <form action="{{ routes.search_url }}" method="get" class="flex items-center gap-3">
+        <input type="hidden" name="type" value="product">
+        <input
+          type="search"
+          name="q"
+          placeholder="{{ 'general.search.search_store' | t }}"
+          class="flex-1 border border-gray-300 rounded-full px-5 py-2.5 text-sm focus:outline-none focus:border-[#9700cd] transition-colors"
+          aria-label="{{ 'general.search.search' | t }}"
+        >
+        <button type="submit" class="bg-[#9700cd] text-white rounded-full px-5 py-2.5 text-sm font-medium hover:bg-[#e315c1] transition-colors">
+          {{ 'general.search.search' | t }}
+        </button>
+        <button type="button" class="search-close text-gray-500 hover:text-black transition-colors p-1" aria-label="{{ 'general.accessibility.close_menu' | t }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"></path><path d="m6 6 12 12"></path>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "div",
+  "class": "header-wrapper",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "mobile_menu",
+      "label": "Mobile menu",
+      "default": "main-menu"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sign_type",
+      "name": "Sign Type Link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Custom Sign"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}

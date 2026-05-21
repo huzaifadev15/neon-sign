@@ -1,0 +1,78 @@
+<footer class="site-footer bg-slate-900 text-white mt-16">
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <div class="footer-brand">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" width="160" height="40" class="h-10 w-auto object-contain mb-4">
+        {%- else -%}
+          <span class="text-white font-bold text-xl block mb-4">{{ shop.name }}</span>
+        {%- endif -%}
+        <p class="text-slate-400 text-sm leading-relaxed">{{ section.settings.footer_description }}</p>
+      </div>
+
+      <div class="footer-nav">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-white mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="{{ routes.root_url }}" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">Home</a></li>
+          <li><a href="{{ routes.collections_url }}" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">Shop</a></li>
+          <li><a href="/pages/gallery" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">Gallery</a></li>
+          <li><a href="/pages/faq" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">FAQ</a></li>
+          <li><a href="/pages/contact-us" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-products">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-white mb-4">Sign Types</h3>
+        <ul class="space-y-2">
+          <li><a href="/products/custom-neon-sign" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">Custom Neon Signs</a></li>
+          <li><a href="/products/custom-led-signs" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">Custom LED Signs</a></li>
+          <li><a href="/products/custom-acrylic-signs" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">Acrylic Signs</a></li>
+          <li><a href="/products/custom-metal-signs" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">Metal Signs</a></li>
+          <li><a href="/products/custom-storefront-signs" class="text-slate-400 hover:text-[#ff66f8] transition-colors text-sm">Storefront Signs</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-contact">
+        <h3 class="text-sm font-bold uppercase tracking-wider text-white mb-4">Contact Us</h3>
+        <div class="space-y-3">
+          <a href="tel:{{ settings.phone_href }}" class="flex items-center text-[#ff66f8] font-bold hover:text-[#ff99fb] transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            {{ settings.phone_number }}
+          </a>
+          <p class="text-slate-400 text-sm">{{ settings.business_hours }}</p>
+          <a href="/pages/contact-us" class="inline-block mt-2 bg-gradient-to-r from-[#9700cd] to-[#e315c1] text-white text-sm font-medium py-2 px-5 rounded-full hover:from-[#e315c1] hover:to-[#9700cd] transition-all duration-300">Get Free Quote</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="border-t border-slate-700/50 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-slate-500 text-sm">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      <div class="flex gap-4 text-sm">
+        <a href="/policies/privacy-policy" class="text-slate-500 hover:text-[#ff66f8] transition-colors">Privacy Policy</a>
+        <a href="/policies/terms-of-service" class="text-slate-500 hover:text-[#ff66f8] transition-colors">Terms of Service</a>
+        <a href="/policies/refund-policy" class="text-slate-500 hover:text-[#ff66f8] transition-colors">Refund Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "footer_description",
+      "label": "Footer description",
+      "default": "Your trusted source for custom neon signs, LED signs, and premium signage solutions."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer"
+    }
+  ]
+}
+{% endschema %}

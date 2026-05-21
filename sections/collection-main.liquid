@@ -1,0 +1,56 @@
+<section class="collection-main py-12" style="margin-top: 4rem;">
+  <div class="container mx-auto px-4">
+    <div class="collection-header mb-8">
+      <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="text-gray-500 max-w-2xl">{{ collection.description }}</div>
+      {%- endif -%}
+      <p class="text-sm text-gray-400 mt-2">{{ collection.products_count }} products</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {%- for product in collection.products -%}
+        {%- render 'product-card', product: product -%}
+      {%- else -%}
+        <div class="col-span-full text-center py-16 text-gray-400">
+          <p class="text-lg">No products found in this collection.</p>
+          <a href="{{ routes.root_url }}" class="inline-block mt-4 text-[#9700cd] font-semibold hover:underline">Continue shopping</a>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="pagination flex justify-center items-center gap-2 mt-12" aria-label="Pagination">
+        {%- if paginate.previous -%}
+          <a href="{{ paginate.previous.url }}" class="px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:border-[#9700cd] hover:text-[#9700cd] transition-colors text-sm font-medium">&larr; Prev</a>
+        {%- endif -%}
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a href="{{ part.url }}" class="px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:border-[#9700cd] hover:text-[#9700cd] transition-colors text-sm font-medium">{{ part.title }}</a>
+          {%- else -%}
+            {%- if part.title == paginate.current_page -%}
+              <span class="px-4 py-2 rounded-full text-sm font-bold text-white" style="background: linear-gradient(to right, #9700cd, #e315c1);">{{ part.title }}</span>
+            {%- else -%}
+              <span class="px-4 py-2 text-gray-400 text-sm">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if paginate.next -%}
+          <a href="{{ paginate.next.url }}" class="px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:border-[#9700cd] hover:text-[#9700cd] transition-colors text-sm font-medium">Next &rarr;</a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Main",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Collection Main"
+    }
+  ]
+}
+{% endschema %}

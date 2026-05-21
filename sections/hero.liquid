@@ -1,0 +1,119 @@
+<section class="hero-section relative overflow-hidden" style="padding-top: calc(4rem + 3rem);">
+  <div class="hero-bg absolute inset-0" style="background: {{ section.settings.bg_gradient }}; z-index: 0;"></div>
+
+  {%- if section.settings.bg_image != blank -%}
+    <div class="absolute inset-0 z-0">
+      <img
+        src="{{ section.settings.bg_image | image_url: width: 1920 }}"
+        alt=""
+        class="w-full h-full object-cover"
+        loading="eager"
+      >
+      <div class="absolute inset-0" style="background: rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }});"></div>
+    </div>
+  {%- endif -%}
+
+  <div class="relative z-10 container mx-auto px-4 py-20 lg:py-32 text-center">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="hero-eyebrow inline-block text-xs font-bold uppercase tracking-widest text-[#ff66f8] bg-[#ff00f5]/10 border border-[#ff00f5]/30 rounded-full px-4 py-1.5 mb-6">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    <h1 class="hero-heading text-4xl md:text-5xl lg:text-7xl font-extrabold text-white leading-tight mb-6">
+      {{ section.settings.heading }}
+    </h1>
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="hero-subheading text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-10 leading-relaxed">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      {%- if section.settings.cta_primary_label != blank -%}
+        <a href="{{ section.settings.cta_primary_url }}" class="inline-flex items-center gap-2 bg-gradient-to-r from-[#9700cd] to-[#e315c1] text-white font-bold px-8 py-4 rounded-full text-base hover:from-[#e315c1] hover:to-[#9700cd] transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg>
+          {{ section.settings.cta_primary_label }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.cta_secondary_label != blank -%}
+        <a href="{{ section.settings.cta_secondary_url }}" class="inline-flex items-center gap-2 bg-white/10 border border-white/30 text-white font-semibold px-8 py-4 rounded-full text-base hover:bg-white/20 transition-all duration-300 backdrop-blur-sm">
+          {{ section.settings.cta_secondary_label }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Custom Neon & LED Signs"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Light Up Your World With <em>Custom Signs</em></p>"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Premium custom neon, LED, acrylic, and metal signs crafted to your exact specifications. Free instant quote."
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image overlay opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "default": 50
+    },
+    {
+      "type": "text",
+      "id": "bg_gradient",
+      "label": "Background gradient (CSS)",
+      "default": "linear-gradient(135deg, #1a0035 0%, #3b0066 50%, #0d001a 100%)"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Primary CTA label",
+      "default": "Get Free Quote"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_url",
+      "label": "Primary CTA URL",
+      "default": "/pages/contact-us"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Secondary CTA label",
+      "default": "Browse Signs"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_url",
+      "label": "Secondary CTA URL",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}
